@@ -40,7 +40,12 @@
                 <version>1.4</version>
             </dependency>
 
-            <!--scala-->
+            <!--scala. Need library although compiler include-->
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-compiler</artifactId>
@@ -86,7 +91,7 @@
     <build>
         <pluginManagement>
             <plugins>
-                <!--Package plugin 1-->
+                <!--Build plugin-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
@@ -101,7 +106,6 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!--Package plugin 1-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
@@ -111,6 +115,7 @@
                         <descriptors>
                             <descriptor>src${file.separator}assembly${file.separator}assembly.xml</descriptor>
                         </descriptors>
+                        <attach>false</attach>
                     </configuration>
                     <executions>
                         <execution>
@@ -133,6 +138,22 @@
                         <compilerArguments>
                             <extdirs>src${file.separator}main${file.separator}lib</extdirs>
                         </compilerArguments>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>3.3.2</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <scalaVersion>${scala.version}</scalaVersion>
                     </configuration>
                 </plugin>
                 <!--Test plugin-->
